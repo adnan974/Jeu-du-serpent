@@ -25,7 +25,7 @@ function BoardGame() {
     this.create = function () {
 
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.fillRect(0, 0, this.height, this.width);
+        this.canvasContext.strokeRect(0, 0, this.height, this.width);
     }
 }
 
@@ -34,10 +34,18 @@ function Snake() {
     this.color = "red";
     this.x = 0;
     this.y = 0;
+
     this.newX = 5;
     this.newY = this.y;
+
     this.width = 10;
     this.height = 10;
+
+    this.growthNumber = 5;
+
+    this.arrayDeplacement = [[this.newX, this.newY]];
+
+
 
     // TODO: setter (?)
     this.selectColor = function (color) {
@@ -55,7 +63,22 @@ function Snake() {
     }
 
     this.clear = function () {
-        this.canvasContext.clearRect(this.x, this.y, this.width, this.height);
+        if (this.arrayDeplacement.length > 6) {
+            let xPreviousPos = this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber][0]
+            let yPreviousPos = this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber][1]
+
+
+            this.canvasContext.clearRect(xPreviousPos, yPreviousPos, this.width, this.height);
+
+            /*
+            this.arrayDeplacement.splice(this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber],1);
+            console.log(this.arrayDeplacement);
+            */
+
+        }
+
+
+
 
     }
 
@@ -72,19 +95,18 @@ function Snake() {
                 break;
 
             case "up":
-                this.newY -=5;
+                this.newY -= 5;
                 this.y = this.newY;
-
                 break;
 
             case "down":
-                this.newY +=5;
+                this.newY += 5;
                 this.y = this.newY;
 
                 break;
-            }
+        }
         this.newDraw();
-        
+
 
     }
 
@@ -102,10 +124,13 @@ function Snake() {
 
             this.clear();
             this.mooveDirection(direction);
-            
+            this.arrayDeplacement.push([this.newX, this.newY]);
+            this.grow();
+
+
+
 
             document.addEventListener('keydown', function (e) {
-                console.log(e.keyCode);
                 switch (e.keyCode) {
                     case asciiMooveLeftCode:
                         direction = "left";
@@ -125,6 +150,16 @@ function Snake() {
         }, 500);
 
     }
+
+var test = 5;
+    this.grow = function () {
+        if (this.arrayDeplacement.length == test){
+            this.growthNumber++;
+            test+= 5;
+        }
+    }
+
+
 
 }
 
