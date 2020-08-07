@@ -20,13 +20,13 @@ function BoardGame() {
     // Pq ce changement: principe du clean code(?), ajouter "board" crée de la redondance
     this.color = "black";
     this.height = 500;
-    this.width = 900;
-    this.tourNumber = 0;
+    this.width = 500;
+    this.borderWitdh = "2";
 
     this.create = function () {
-
+        this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.strokeRect(0, 0, this.height, this.width);
+        this.canvasContext.strokeRect(0,0, this.height, this.width);
     }
 }
 
@@ -42,6 +42,8 @@ function Snake() {
 
     this.growthNumber = 5;
 
+    this.direction = "right";
+
     this.arrayBody = [[this.newX, this.newY]];
 
 
@@ -52,14 +54,9 @@ function Snake() {
         this.color = color;
     }
 
-    //TODO: Définir cette fonction à l'aide d'un prototype ?
-    this.drawInit = function () {
-        this.arrayBody.forEach(element => {
-            this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
-        });
-    };
+ 
 
-    this.newDraw = function () {
+    this.draw = function () {
         this.arrayBody.forEach(element => {
             this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
         });
@@ -72,8 +69,8 @@ function Snake() {
         this.arrayBody.shift();
     }
 
-    this.mooveDirection = function (direction) {
-        switch (direction) {
+    this.mooveDirection = function () {
+        switch (this.direction) {
             case "right":
                 this.newX += 5;
                 break;
@@ -90,64 +87,41 @@ function Snake() {
                 this.newY += 5;
                 break;
         }
-        this.newDraw();
-
-
+        this.arrayBody.push([this.newX, this.newY]);
     }
 
 
-    this.mooveInit = function () {
 
+    this.listenEvent = function(){
         const asciiMooveLeftCode = 37;
         const asciiMooveRightCode = 39;
         const asciiMooveUpCode = 38;
         const asciiMooveDownCode = 40;
-
-        // Todo : ajouter un attribut en mode protedted dans la classe board game ?
-        let nbItr = 0;
-        let direction = "right";
-
-        setInterval(() => {
-            if (nbItr > 0) {
-                this.clearBody();
-
+        document.addEventListener('keydown', function (e) {
+            switch (e.keyCode) {
+                case asciiMooveLeftCode:
+                    // Todo: ajoute run setter ?
+                    this.direction = "left";
+                    break;
+                case asciiMooveRightCode:
+                    this.direction = "right";
+                    break;
+                case asciiMooveUpCode:
+                    this.direction = "up";
+                    break;
+                case asciiMooveDownCode:
+                    this.direction = "down";
+                    break;
             }
 
-            this.mooveDirection(direction);
-            this.arrayBody.push([this.newX, this.newY]);
-            this.grow();
-
-            nbItr++;
-
-            document.addEventListener('keydown', function (e) {
-                switch (e.keyCode) {
-                    case asciiMooveLeftCode:
-                        direction = "left";
-                        break;
-                    case asciiMooveRightCode:
-                        direction = "right";
-                        break;
-                    case asciiMooveUpCode:
-                        direction = "up";
-                        break;
-                    case asciiMooveDownCode:
-                        direction = "down";
-                        break;
-                }
-
-            })
-        }, 50);
-
+        })
     }
 
-    var test = 0;
     this.grow = function () {
-        test += 1;
-        if (test%5 == 0) {
             this.growthNumber++;
-            this.arrayBody.push([1, 0]);
+            this.arrayBody.push([null, null]);
             console.log(this.arrayBody.length);
-        }
+        
     }
 
 
@@ -163,14 +137,18 @@ function Fruit(){
     this.x = 50;
     this.y= 50;
 
-    this.selectColor = function (color) {
+    this.selectColorF = function (color) {
         this.canvasContext.fillStyle = color;
         this.color = color;
     }
 
-    this.initFruit = function(){
+    this.create = function(){
         this.canvasContext.fillRect(this.x,this.y,this.width,this.height);
     }
+}
+
+function Physics(){
+
 }
 
 
@@ -178,16 +156,61 @@ function Fruit(){
     var boardGame = new BoardGame();
     var snake = new Snake();
     var fruit = new Fruit();
+    
 
 
-   boardGame.create();
+    boardGame.create();
     snake.selectColor("red");
-    snake.drawInit();
+    snake.draw();
 
-    snake.mooveInit();
+    fruit.selectColorF("blue");
+    fruit.create();
+    setInterval(() => {
+        
+       // snake.listenEvent();
+       snake.clearBody();
+        snake.mooveDirection();
+        snake.selectColor('red');
+        snake.draw();
+        console.log("f.x= "+fruit.x+"f.y= "+fruit.y+"s.x= "+snake.newX+"s.y= "+snake.newY);
+         if (fruit.x == snake.newX && fruit.y == snake.newY){
+             snake.grow();
+             fruit.x += 20;
+             fruit.y += 20;
+             fruit.create();
+         }
+
+        const asciiMooveLeftCode = 37;
+        const asciiMooveRightCode = 39;
+        const asciiMooveUpCode = 38;
+        const asciiMooveDownCode = 40;
+        document.addEventListener('keydown', function (e) {
+            switch (e.keyCode) {
+                case asciiMooveLeftCode:
+                    // Todo: ajoute run setter ?
+                    snake.direction = "left";
+                    break;
+                case asciiMooveRightCode:
+                    snake.direction = "right";
+                    break;
+                case asciiMooveUpCode:
+                    snake.direction = "up";
+                    break;
+                case asciiMooveDownCode:
+                    snake.direction = "down";
+                    break;
+            }
+
+        })
+
+    }, 100);
+
+    
+
+   /* snake.mooveInit();
 
     fruit.selectColor("blue");
-    fruit.initFruit();
+    fruit.initFruit();*/
 
 
 
