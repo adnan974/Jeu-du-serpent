@@ -21,6 +21,7 @@ function BoardGame() {
     this.color = "black";
     this.height = 500;
     this.width = 900;
+    this.tourNumber = 0;
 
     this.create = function () {
 
@@ -32,18 +33,16 @@ function BoardGame() {
 function Snake() {
     Canvas.call(this);
     this.color = "red";
-    this.x = 0;
-    this.y = 0;
 
-    this.newX = 5;
-    this.newY = this.y;
+    this.newX = 0;
+    this.newY = 0;
 
     this.width = 10;
     this.height = 10;
 
     this.growthNumber = 5;
 
-    this.arrayDeplacement = [[this.newX, this.newY]];
+    this.arrayBody = [[this.newX, this.newY]];
 
 
 
@@ -55,54 +54,40 @@ function Snake() {
 
     //TODO: Définir cette fonction à l'aide d'un prototype ?
     this.drawInit = function () {
-        this.canvasContext.fillRect(this.x, this.y, this.width, this.height);
+        this.arrayBody.forEach(element => {
+            this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
+        });
     };
 
     this.newDraw = function () {
-        this.canvasContext.fillRect(this.newX, this.newY, this.width, this.height);
+        this.arrayBody.forEach(element => {
+            this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
+        });
     }
 
-    this.clear = function () {
-        if (this.arrayDeplacement.length > 6) {
-            let xPreviousPos = this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber][0]
-            let yPreviousPos = this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber][1]
-
-
-            this.canvasContext.clearRect(xPreviousPos, yPreviousPos, this.width, this.height);
-
-            /*
-            this.arrayDeplacement.splice(this.arrayDeplacement[this.arrayDeplacement.length - this.growthNumber],1);
-            console.log(this.arrayDeplacement);
-            */
-
-        }
-
-
-
-
+    this.clearBody = function () {
+        let xPreviousPos = this.arrayBody[0][0];
+        let yPreviousPos = this.arrayBody[0][1];
+        this.canvasContext.clearRect(xPreviousPos, yPreviousPos, this.width, this.height);
+        this.arrayBody.shift();
     }
 
     this.mooveDirection = function (direction) {
         switch (direction) {
             case "right":
                 this.newX += 5;
-                this.x = this.newX;
                 break;
 
             case "left":
                 this.newX -= 5;
-                this.x = this.newX;
                 break;
 
             case "up":
                 this.newY -= 5;
-                this.y = this.newY;
                 break;
 
             case "down":
                 this.newY += 5;
-                this.y = this.newY;
-
                 break;
         }
         this.newDraw();
@@ -118,17 +103,21 @@ function Snake() {
         const asciiMooveUpCode = 38;
         const asciiMooveDownCode = 40;
 
+        // Todo : ajouter un attribut en mode protedted dans la classe board game ?
+        let nbItr = 0;
         let direction = "right";
 
         setInterval(() => {
+            if (nbItr > 0) {
+                this.clearBody();
 
-            this.clear();
+            }
+
             this.mooveDirection(direction);
-            this.arrayDeplacement.push([this.newX, this.newY]);
+            this.arrayBody.push([this.newX, this.newY]);
             this.grow();
 
-
-
+            nbItr++;
 
             document.addEventListener('keydown', function (e) {
                 switch (e.keyCode) {
@@ -147,32 +136,60 @@ function Snake() {
                 }
 
             })
-        }, 500);
+        }, 50);
 
     }
 
-var test = 5;
+    var test = 0;
     this.grow = function () {
-        if (this.arrayDeplacement.length == test){
+        test += 1;
+        if (test%5 == 0) {
             this.growthNumber++;
-            test+= 5;
+            this.arrayBody.push([1, 0]);
+            console.log(this.arrayBody.length);
         }
     }
 
 
 
+
+}
+
+function Fruit(){
+    Canvas.call(this);
+    this.color = "black";
+    this.width = 10;
+    this.height = 10;
+    this.x = 50;
+    this.y= 50;
+
+    this.selectColor = function (color) {
+        this.canvasContext.fillStyle = color;
+        this.color = color;
+    }
+
+    this.initFruit = function(){
+        this.canvasContext.fillRect(this.x,this.y,this.width,this.height);
+    }
 }
 
 
 (function () {
     var boardGame = new BoardGame();
     var snake = new Snake();
+    var fruit = new Fruit();
 
-    boardGame.create();
+
+   boardGame.create();
     snake.selectColor("red");
     snake.drawInit();
 
     snake.mooveInit();
+
+    fruit.selectColor("blue");
+    fruit.initFruit();
+
+
 
 })()
 
