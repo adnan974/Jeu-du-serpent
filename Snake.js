@@ -27,6 +27,7 @@ function Snake() {
 
 
     this.draw = function () {
+        
         this.arrayBody.forEach(element => {
             this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
         });
@@ -36,6 +37,7 @@ function Snake() {
         let xPreviousPos = this.arrayBody[0][0];
         let yPreviousPos = this.arrayBody[0][1];
         this.canvasContext.clearRect(xPreviousPos, yPreviousPos, this.width, this.height);
+
         this.arrayBody.shift();
     }
 

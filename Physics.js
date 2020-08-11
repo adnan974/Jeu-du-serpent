@@ -12,7 +12,7 @@ function Physics(snake,boardGame,fruit) {
     this.fruit = fruit;
 
     this.checkBoardColision = function(){
-        if((snake.newX==0 || snake.newY == 0)||snake.newX == boardGame.width||snake.newY == boardGame.height){
+        if((snake.newX== 0 || snake.newY == 0)||snake.newX == boardGame.width-5||snake.newY == boardGame.height-5){
             console.log("GAME OVER");
             return true;
         }
@@ -21,6 +21,7 @@ function Physics(snake,boardGame,fruit) {
         for(let i=0;i<snake.arrayBody.length-1;i++){
             if(snake.newX == snake.arrayBody[i][0] && snake.newY == snake.arrayBody[i][1]){
                 console.log("GAME OVER");
+                return true;
             }
 
         }

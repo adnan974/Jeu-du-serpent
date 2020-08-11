@@ -26,6 +26,7 @@ function Fruit() {
         this.y = getRandomInt(5, this.boardGame.height - 5);
         this.y -= this.y % 5;
         this.NbOfFruitApparition++;
+
         this.canvasContext.fillRect(this.x, this.y, this.width, this.height);
     }
 }

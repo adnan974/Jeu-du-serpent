@@ -1,27 +1,35 @@
-import {Canvas} from "./Canvas.js";
-import {BoardGame} from "./BoardGame.js";
-import {Snake} from "./Snake.js"
-import {Fruit} from "./Fruit.js";
-import {Physics} from "./Physics.js";
+import { Canvas } from "./Canvas.js";
+import { BoardGame } from "./BoardGame.js";
+import { Snake } from "./Snake.js"
+import { Fruit } from "./Fruit.js";
+import { Physics } from "./Physics.js";
 
 // Question que je me pose : est-ce que l'héritage est une bonne idée ?
 // Je peux aussi créer une classe statique sur Canva
 
 
 
-(function gameSetup () {
+(function gameSetup() {
+    // Créer un objet score
     var score = 0;
+    var scoreElement = document.getElementById("score");
+
+    var speed = 17;
     var boardGame = new BoardGame();
     var snake = new Snake();
     var fruit = new Fruit();
     console.log(snake.newX);
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
-    var physicsGame = new Physics(snake,boardGame,fruit);
+    var physicsGame = new Physics(snake, boardGame, fruit);
+
+
+    scoreElement.textContent = "Score: " + score;
 
     boardGame.clear();
+    //boardGame.beginPath();
 
 
-
+    boardGame.updateScoreInterface(score);
     boardGame.create();
     snake.selectColor("red");
     snake.draw();
@@ -35,7 +43,6 @@ import {Physics} from "./Physics.js";
     const asciiMooveUpCode = 38;
     const asciiMooveDownCode = 40;
     document.addEventListener('keydown', function (e) {
-        boardGame.clear();
 
         // TODO: mettre ça dans une fonction ?
         switch (e.keyCode) {
@@ -56,37 +63,41 @@ import {Physics} from "./Physics.js";
 
 
     })
-    setInterval(() => {
 
-        // snake.listenEvent();
+    function animation() {
         snake.clearBody();
         snake.mooveDirection();
         snake.selectColor('red');
         snake.draw();
-        if(physicsGame.checkBoardColision()){
+        if (physicsGame.checkBoardColision()) {
             return gameSetup();
         }
-        if(snake.growthNumber >= 4){
-            physicsGame.checkSnakeColision();
+        if (snake.growthNumber >= 4) {
+            if (physicsGame.checkSnakeColision()) {
+                return gameSetup();
+            }
         }
 
-        if (physicsGame.checkFruitColision()){
-            score += 1;
+        if (physicsGame.checkFruitColision()) {
+            score += 10;
+            boardGame.updateScoreInterface(score);
+
+            scoreElement.textContent = "score: " + score;
             snake.grow();
             fruit.create();
         }
-        
+        //snake.grow();
 
-        
+        // TODO: A améliorer ?
+        setTimeout(() => {
+            requestAnimationFrame(animation);
 
-    }, 50);
+        }, speed);
+    }
+
+    requestAnimationFrame(animation);
 
 
-
-    /* snake.mooveInit();
- 
-     fruit.selectColor("blue");
-     fruit.initFruit();*/
 
 
 

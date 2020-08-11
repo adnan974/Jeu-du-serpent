@@ -12,7 +12,7 @@ function BoardGame() {
     this.color = "black";
     this.height = 300;
     this.width = 300;
-    this.borderWitdh = "2";
+    this.borderWitdh = "1";
 
     this.create = function () {
         this.canvasContext.lineWidth = this.borderWitdh;
@@ -24,6 +24,13 @@ function BoardGame() {
     this.clear = function(){
         console.log(": "+this.canvasElement.width+";"+": "+this.canvasElement.height);        
         this.canvasContext.clearRect(0,0,this.canvasElement.width,this.canvasElement.height);
+    }
+
+    this.updateScoreInterface = function(score){
+        // Y'a pas une meilleure maniere de faire ?
+        this.canvasContext.clearRect(310,0,200,200);        
+        this.canvasContext.font = "30px Arial";
+        this.canvasContext.fillText("Score:"+score,330,30);
     }
 }
 
