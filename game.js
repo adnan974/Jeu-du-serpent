@@ -18,7 +18,6 @@ import { Physics } from "./Physics.js";
     var boardGame = new BoardGame();
     var snake = new Snake();
     var fruit = new Fruit();
-    console.log(snake.newX);
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
     var physicsGame = new Physics(snake, boardGame, fruit);
 
@@ -29,8 +28,9 @@ import { Physics } from "./Physics.js";
     //boardGame.beginPath();
 
 
-    boardGame.updateScoreInterface(score);
     boardGame.create();
+    boardGame.updateScoreInterface(score);
+
     snake.selectColor("red");
     snake.draw();
 
@@ -67,11 +67,12 @@ import { Physics } from "./Physics.js";
     function animation() {
         snake.clearBody();
         snake.mooveDirection();
-        snake.selectColor('red');
         snake.draw();
+
         if (physicsGame.checkBoardColision()) {
             return gameSetup();
         }
+
         if (snake.growthNumber >= 4) {
             if (physicsGame.checkSnakeColision()) {
                 return gameSetup();
@@ -84,6 +85,8 @@ import { Physics } from "./Physics.js";
 
             scoreElement.textContent = "score: " + score;
             snake.grow();
+
+            
             fruit.create();
         }
         //snake.grow();

@@ -6,8 +6,8 @@ function Snake() {
     this.newX = 5;
     this.newY = 5;
 
-    this.width = 10;
-    this.height = 10;
+    this.width = 5;
+    this.height = 5;
 
     this.growthNumber = 1;
 
@@ -27,7 +27,7 @@ function Snake() {
 
 
     this.draw = function () {
-        
+        this.selectColor("red");
         this.arrayBody.forEach(element => {
             this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
         });

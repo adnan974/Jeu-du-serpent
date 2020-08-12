@@ -10,11 +10,18 @@ function BoardGame() {
     // nouvelle version
     // Pq ce changement: principe du clean code(?), ajouter "board" crée de la redondance
     this.color = "black";
-    this.height = 300;
-    this.width = 300;
+    this.height = 150;
+    this.width = 150;
     this.borderWitdh = "1";
 
     this.create = function () {
+        this.canvasContext.setTransform(1, 0, 0, 1, 0, 0);
+
+        // Cette fonction double la taille de tous les éléments du context
+        this.canvasContext.scale(2,2);
+
+
+
         this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;
         this.canvasContext.strokeRect(0, 0, this.height, this.width);
@@ -28,9 +35,11 @@ function BoardGame() {
 
     this.updateScoreInterface = function(score){
         // Y'a pas une meilleure maniere de faire ?
-        this.canvasContext.clearRect(310,0,200,200);        
-        this.canvasContext.font = "30px Arial";
-        this.canvasContext.fillText("Score:"+score,330,30);
+        this.canvasContext.clearRect(170,0,200,200); 
+        this.canvasContext.fillStyle = "black";
+       
+        this.canvasContext.font = "15px Arial";
+        this.canvasContext.fillText("Score:"+score,200,30);
     }
 }
 
