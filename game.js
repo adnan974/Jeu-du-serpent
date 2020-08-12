@@ -4,17 +4,49 @@ import { Snake } from "./Snake.js"
 import { Fruit } from "./Fruit.js";
 import { Physics } from "./Physics.js";
 
-// Question que je me pose : est-ce que l'héritage est une bonne idée ?
-// Je peux aussi créer une classe statique sur Canva
 
 
 
-(function gameSetup() {
+// TODO: créer un objet ? 
+(function gameInit(){
+    let pressStartButton=false;
+    var boardGame = new BoardGame();
+    
+    boardGame.setupHomePage();
+
+    document.addEventListener("keypress",function(e){
+        console.log(e.keyCode);
+        if(e.keyCode==121){
+            gameSetup();
+        }
+    })
+
+    
+
+})()
+
+/*
+function gameOver(){
+    var boardGame = new BoardGame();
+    
+    boardGame.setupGameOverPage();
+
+    document.addEventListener("keypress",function(e){
+        if(e.keyCode == 121){
+            gameSetup();
+
+        }
+        
+    })
+}
+*/
+
+function gameSetup() {
     // Créer un objet score
-    var score = 0;
-    var scoreElement = document.getElementById("score");
+   // var scoreElement = document.getElementById("score");
 
-    var speed = 17;
+
+    var speed = 34;
     var boardGame = new BoardGame();
     var snake = new Snake();
     var fruit = new Fruit();
@@ -22,14 +54,14 @@ import { Physics } from "./Physics.js";
     var physicsGame = new Physics(snake, boardGame, fruit);
 
 
-    scoreElement.textContent = "Score: " + score;
+    //scoreElement.textContent = "Score: " + boardGame.score;
 
     boardGame.clear();
     //boardGame.beginPath();
 
 
     boardGame.create();
-    boardGame.updateScoreInterface(score);
+    boardGame.updateScoreInterface();
 
     snake.selectColor("red");
     snake.draw();
@@ -80,10 +112,9 @@ import { Physics } from "./Physics.js";
         }
 
         if (physicsGame.checkFruitColision()) {
-            score += 10;
-            boardGame.updateScoreInterface(score);
+            boardGame.updateScoreInterface();
 
-            scoreElement.textContent = "score: " + score;
+         //   scoreElement.textContent = "score: " + score;
             snake.grow();
 
             
@@ -104,7 +135,7 @@ import { Physics } from "./Physics.js";
 
 
 
-})()
+}
 
 
 

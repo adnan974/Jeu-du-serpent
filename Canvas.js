@@ -1,3 +1,5 @@
+// Question que je me pose : est-ce que l'héritage est une bonne idée ?
+// Je peux aussi créer une classe statique sur Canva
 function Canvas() {
     this.canvasId = "#canvas";
     // TODO: ajouter un setter
