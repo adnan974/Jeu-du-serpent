@@ -3,34 +3,40 @@ import {Canvas} from "./Canvas.js";
 import {BoardGame} from "./BoardGame.js";
 import {getRandomInt} from "./Function collection.js"
 
-function Fruit() {
-    Canvas.call(this);
-    this.color = "black";
-    this.width = 5;
-    this.height = 5;
-    this.x = 0;
-    this.y = 0;
-    this.NbOfFruitApparition = 0;
+function Fruit(canvasId,color="blue",width=5,height=5,x=0,y=0) {
+
+    Canvas.call(this,canvasId);
+    
+    this.color = color;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
     // Compositon ?
     // Pas mieux de faire une agrégation ?
-    this.boardGame = new BoardGame();
+    this.boardGame = new BoardGame(canvasId);
 
-    this.selectColorF = function (color) {
+    this.setColor = function (color) {
         this.canvasContext.fillStyle = color;
         this.color = color;
     }
 
+    this.getColor = () => this.color;
+
+    this.getRandomIntOf5Table = function(){
+        let randomInt = getRandomInt(5, this.boardGame.width - 5);
+        
+        return randomInt-randomInt%5;
+    }
+
     this.create = function () {
-        this.selectColorF("blue");
-        this.x = getRandomInt(5, this.boardGame.width - 5);
-        this.x -= this.x % 5;
-        this.y = getRandomInt(5, this.boardGame.height - 5);
-        this.y -= this.y % 5;
-        console.log("fruit coord: "+this.y+"; "+this.x);
-        this.NbOfFruitApparition++;
+        this.x = this.getRandomIntOf5Table();
+        this.y = this.getRandomIntOf5Table();
 
         this.canvasContext.fillRect(this.x, this.y, this.width, this.height);
     }
+
+
 }
 
 export {Fruit};

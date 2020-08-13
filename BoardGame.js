@@ -1,6 +1,11 @@
 import { Canvas } from "./Canvas.js"
-function BoardGame() {
-    Canvas.call(this);
+
+// TODO séparer cette classe en plusieurs classes. Une qui gère, le board, l'autre le score etc... avec une interface
+function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1") {
+
+    Canvas.call(this,canvasId);
+
+
     // ancienne version
     /*
     this.boardColor = "black"; 
@@ -9,13 +14,13 @@ function BoardGame() {
     */
     // nouvelle version
     // Pq ce changement: principe du clean code(?), ajouter "board" crée de la redondance
-    this.color = "black";
-    this.height = 150;
-    this.width = 150;
-    this.borderWitdh = "1";
+    this.color = color;
+    this.height = height;
+    this.width = width;
+    this.borderWitdh = borderWitdh;
     this.score = -10;
 
-    this.create = function () {
+    this.createBoder = function () {
         this.canvasContext.setTransform(1, 0, 0, 1, 0, 0);
 
         // Cette fonction double la taille de tous les éléments du context
@@ -31,7 +36,6 @@ function BoardGame() {
 
     // TODO a supprimer qd plus utilisé. Je dois utilisé la méthode présente dans la classe Canvas
     this.clear = function () {
-        console.log(": " + this.canvasElement.width + ";" + ": " + this.canvasElement.height);
         this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
@@ -45,7 +49,7 @@ function BoardGame() {
         this.canvasContext.fillText("Score:" + this.score, 200, 30);
     }
 
-    this.setupHomePage = function () {
+    this.createHomePage = function () {
         this.canvasContext.scale(2, 2);
 
         this.canvasContext.lineWidth = this.borderWitdh;
@@ -60,7 +64,7 @@ function BoardGame() {
 
     }
 
-    this.setupGameOverPage = function(){
+    this.createGameOverPage = function(){
         this.clear();
         this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;

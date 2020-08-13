@@ -1,35 +1,53 @@
-import {Canvas} from "./Canvas.js";
-function Snake() {
-    Canvas.call(this);
+import { Canvas } from "./Canvas.js";
+function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
+    Canvas.call(this, canvasId);
+
+
     this.color = "red";
 
-    this.newX = 5;
-    this.newY = 5;
+    this.newX = initX;
+    this.newY = initY;
 
-    this.width = 5;
-    this.height = 5;
-
-    this.growthNumber = 1;
+    this.width = width;
+    this.height = height;
 
     this.direction = "right";
     this.previousDirection = null;
+
+    this.growthNumber = 0;
 
     this.arrayBody = [[this.newX, this.newY]];
 
 
 
-    // TODO: setter (?)
-    this.selectColor = function (color) {
+
+    // var snake = document.getElementById("snake_head");
+
+    this.setColor = function (color) {
         this.canvasContext.fillStyle = color;
         this.color = color;
     }
 
 
+    this.getColor = () => this.color;
+
+    this.setDirection = function (direction) {
+        if (direction === "right" || direction === "left" || direction === "up" || direction === "down") {
+            this.direction = direction;
+        }
+        // TODO: gestion erreur
+        console.log("erreur")
+    }
+
+    this.getDirection = () => this.direction;
+
+    this.getGrowthNumber = () => this.growthNumber;
+
 
     this.draw = function () {
-        this.selectColor("red");
         this.arrayBody.forEach(element => {
             this.canvasContext.fillRect(element[0], element[1], this.width, this.height);
+            //this.canvasContext.drawImage(snake, element[0], element[1], this.width, this.height);
         });
     }
 
@@ -86,6 +104,7 @@ function Snake() {
                 }
                 break;
         }
+        this.growthNumber++;
         this.previousDirection = this.direction;
         this.arrayBody.push([this.newX, this.newY]);
     }
@@ -117,7 +136,6 @@ function Snake() {
     }
 
     this.grow = function () {
-        this.growthNumber++;
         this.arrayBody.push([null, null]);
         console.log(this.arrayBody.length);
 
@@ -128,4 +146,4 @@ function Snake() {
 
 }
 
-export {Snake};
+export { Snake };

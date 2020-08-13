@@ -5,23 +5,23 @@ import { Fruit } from "./Fruit.js";
 import { Physics } from "./Physics.js";
 
 
-
+var canvaId = "canvas";
 
 // TODO: créer un objet ? 
-(function gameInit(){
-    let pressStartButton=false;
-    var boardGame = new BoardGame();
-    
-    boardGame.setupHomePage();
+(function gameInit() {
 
-    document.addEventListener("keypress",function(e){
+    var boardGame = new BoardGame(canvaId);
+
+    boardGame.createHomePage();
+
+    document.addEventListener("keypress", function (e) {
         console.log(e.keyCode);
-        if(e.keyCode==121){
+        if (e.keyCode == 121) {
             gameSetup();
         }
     })
 
-    
+
 
 })()
 
@@ -29,7 +29,7 @@ import { Physics } from "./Physics.js";
 function gameOver(){
     var boardGame = new BoardGame();
     
-    boardGame.setupGameOverPage();
+    boardGame.createGameOverPage();
 
     document.addEventListener("keypress",function(e){
         if(e.keyCode == 121){
@@ -42,17 +42,16 @@ function gameOver(){
 */
 
 function gameSetup() {
-    // Créer un objet score
-   // var scoreElement = document.getElementById("score");
+    // Créer un objet score ?
+    // var scoreElement = document.getElementById("score");
 
 
     var speed = 34;
-    var boardGame = new BoardGame();
-    var snake = new Snake();
-    var fruit = new Fruit();
+    var boardGame = new BoardGame(canvaId);
+    var snake = new Snake(canvaId);
+    var fruit = new Fruit(canvaId);
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
     var physicsGame = new Physics(snake, boardGame, fruit);
-
 
     //scoreElement.textContent = "Score: " + boardGame.score;
 
@@ -60,13 +59,13 @@ function gameSetup() {
     //boardGame.beginPath();
 
 
-    boardGame.create();
+    boardGame.createBoder();
     boardGame.updateScoreInterface();
 
-    snake.selectColor("red");
+    snake.setColor("red");
     snake.draw();
 
-    fruit.selectColorF("blue");
+    fruit.setColor("blue");
     fruit.create();
 
 
@@ -74,22 +73,23 @@ function gameSetup() {
     const asciiMooveRightCode = 39;
     const asciiMooveUpCode = 38;
     const asciiMooveDownCode = 40;
+    
     document.addEventListener('keydown', function (e) {
 
         // TODO: mettre ça dans une fonction ?
         switch (e.keyCode) {
             case asciiMooveLeftCode:
                 // Todo: ajoute run setter ?
-                snake.direction = "left";
+                snake.setDirection("left");
                 break;
             case asciiMooveRightCode:
-                snake.direction = "right";
+                snake.setDirection("right");
                 break;
             case asciiMooveUpCode:
-                snake.direction = "up";
+                snake.setDirection("up");
                 break;
             case asciiMooveDownCode:
-                snake.direction = "down";
+                snake.setDirection("down");
                 break;
         }
 
@@ -99,6 +99,9 @@ function gameSetup() {
     function animation() {
         snake.clearBody();
         snake.mooveDirection();
+
+        // Je préfére mettre : "this.setColor("red");" en dehors de la fonction "draw()" car je ne veux pas que celle ait un side effect
+        snake.setColor("red");
         snake.draw();
 
         if (physicsGame.checkBoardColision()) {
@@ -114,10 +117,10 @@ function gameSetup() {
         if (physicsGame.checkFruitColision()) {
             boardGame.updateScoreInterface();
 
-         //   scoreElement.textContent = "score: " + score;
+            //   scoreElement.textContent = "score: " + score;
             snake.grow();
 
-            
+            fruit.setColor("blue");
             fruit.create();
         }
         //snake.grow();
