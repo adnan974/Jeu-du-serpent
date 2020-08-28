@@ -17,8 +17,7 @@ io.sockets.on('connection', function (socket) {
 
     // CECI EST UN TEST
     socket.on("snakeBody",function(snakeBody){
-        socket.broadcast.emit("snakeBodyReception",snakeBody);
-        console.log(snakeBody);
+        socket.broadcast.emit("snakeBodyToAll",snakeBody);
     })
 })
 

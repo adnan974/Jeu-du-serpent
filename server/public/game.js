@@ -46,10 +46,14 @@ function gameSetup() {
     // var scoreElement = document.getElementById("score");
 
 
-    var speed = 34;
+    var speed = 140;
     var boardGame = new BoardGame(canvaId);
     var snake = new Snake(canvaId);
     var fruit = new Fruit(canvaId);
+
+    // TODO: a mettre dans un objet qui gere le multijoueur 
+    var multiplayerSnake = new Snake(canvaId)
+
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
     var physicsGame = new Physics(snake, boardGame, fruit);
 
@@ -97,12 +101,15 @@ function gameSetup() {
     })
 
     // TEST
-    socket.on("snakeBodyReception",function(snakeBody){
-        snake.arrayBody = snakeBody;
-        snake.draw();
+    socket.on("snakeBodyToAll",function(snakeBody){
+        multiplayerSnake.arrayBody = snakeBody;
+        multiplayerSnake.draw();        
     })
 
     function animation() {
+
+        socket.emit("snakeBody",snake.arrayBody);
+        
         snake.clearBody();
         snake.mooveDirection();
 
