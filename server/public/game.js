@@ -96,6 +96,12 @@ function gameSetup() {
 
     })
 
+    // TEST
+    socket.on("snakeBodyReception",function(snakeBody){
+        snake.arrayBody = snakeBody;
+        snake.draw();
+    })
+
     function animation() {
         snake.clearBody();
         snake.mooveDirection();
@@ -120,6 +126,11 @@ function gameSetup() {
             //   scoreElement.textContent = "score: " + score;
             snake.grow();
 
+            // TEST
+            socket.emit("snakeBody",snake.arrayBody);
+            
+            
+            
             fruit.setColor("blue");
             fruit.create();
         }
