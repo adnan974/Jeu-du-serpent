@@ -20,8 +20,23 @@
     <canvas id="canvas" width="600" height="400">
         <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
     </canvas>
-    <!-- A corriger ! chemin non trouvé-->
+    
+    
+    <script src="/socket.io/socket.io.js"></script>
+    
+    
+    <!-- 
+        doc: j'utilise le type "module" car game.js utilise la syntaxe import(?) 
+        donc est considérée comme un module
+    -->
     <script type="module" src="/game.js"></script>
+    <script type="text/javascript" src="/socketio.js"> </script>
+    <!--
+        <script>
+        const socket = io('http://localhost:8080');
+        socket.emit("test","un client s'est connecté");
+      </script>
+    -->
 
 </body>
 

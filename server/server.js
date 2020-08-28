@@ -10,7 +10,9 @@ app.get("/",function(req,res){
 })
 
 io.sockets.on('connection', function (socket) {
-
+    socket.on("test",function(message){
+        console.log(message);
+    })
 })
 
 server.listen(8080);
