@@ -100,8 +100,12 @@ function gameSetup() {
 
     })
 
-    // TEST
-    socket.on("snakeBodyToAll",function(snakeBody){
+     // TEST
+     socket.on("snakeBodyToAll",function(snakeBody){
+        if (multiplayerSnake.arrayBody.length > 0){
+            multiplayerSnake.clearBody();
+        }
+       
         multiplayerSnake.arrayBody = snakeBody;
         multiplayerSnake.draw();        
     })
@@ -109,6 +113,8 @@ function gameSetup() {
     function animation() {
 
         socket.emit("snakeBody",snake.arrayBody);
+
+       
         
         snake.clearBody();
         snake.mooveDirection();
