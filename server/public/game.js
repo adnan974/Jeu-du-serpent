@@ -3,6 +3,7 @@ import { BoardGame } from "./BoardGame.js";
 import { Snake } from "./Snake.js"
 import { Fruit } from "./Fruit.js";
 import { Physics } from "./Physics.js";
+import { SocketIoManagement } from "./SocketIoManagement.js";
 
 
 var canvaId = "canvas";
@@ -51,11 +52,11 @@ function gameSetup() {
     var snake = new Snake(canvaId);
     var fruit = new Fruit(canvaId);
 
-    // TODO: a mettre dans un objet qui gere le multijoueur 
-    var multiplayerSnake = new Snake(canvaId)
 
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
     var physicsGame = new Physics(snake, boardGame, fruit);
+
+    var socketIoManagement = new SocketIoManagement();
 
     //scoreElement.textContent = "Score: " + boardGame.score;
 
@@ -77,7 +78,7 @@ function gameSetup() {
     const asciiMooveRightCode = 39;
     const asciiMooveUpCode = 38;
     const asciiMooveDownCode = 40;
-    
+
     document.addEventListener('keydown', function (e) {
 
         // TODO: mettre ça dans une fonction ?
@@ -100,22 +101,13 @@ function gameSetup() {
 
     })
 
-     // TEST
-     socket.on("snakeBodyToAll",function(snakeBody){
-        if (multiplayerSnake.arrayBody.length > 0){
-            multiplayerSnake.clearBody();
-        }
-       
-        multiplayerSnake.arrayBody = snakeBody;
-        multiplayerSnake.draw();        
-    })
 
     function animation() {
 
-        socket.emit("snakeBody",snake.arrayBody);
+        socketIoManagement.emitSnakeBody(snake.arrayBody);
+        socketIoManagement.updateOtherClientSnake();
 
-       
-        
+
         snake.clearBody();
         snake.mooveDirection();
 
@@ -140,10 +132,10 @@ function gameSetup() {
             snake.grow();
 
             // TEST
-            socket.emit("snakeBody",snake.arrayBody);
-            
-            
-            
+            socket.emit("snakeBody", snake.arrayBody);
+
+
+
             fruit.setColor("blue");
             fruit.create();
         }
