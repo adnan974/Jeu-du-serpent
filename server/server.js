@@ -6,19 +6,19 @@ var io = require("socket.io").listen(server);
 
 app.use(express.static("public"));
 
-app.get("/",function(req,res){
+app.get("/", function (req, res) {
     res.render("index.ejs");
 })
 
 io.sockets.on('connection', function (socket) {
-    socket.on("test",function(message){
+    socket.on("test", function (message) {
         console.log(message);
     })
 
     // CECI EST UN TEST
-    socket.on("snakeBody",function(snakeBody){
-        console.log("body reçu : "+snakeBody);
-        socket.broadcast.emit("snakeBodyToAll",snakeBody);
+    socket.on("snakeBody", function (snakeBody) {
+        console.log("body reçu : " + snakeBody);
+        socket.broadcast.emit("snakeBodyToAll", snakeBody);
     })
 })
 
