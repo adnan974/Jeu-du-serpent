@@ -105,7 +105,10 @@ function gameSetup() {
     function animation() {
 
         socketIoManagement.emitSnakeBody(snake.arrayBody);
-        socketIoManagement.updateOtherClientSnake();
+        if (snake.arrayBody.length > 1){
+            socketIoManagement.clearOtherClientSnakeBody(snake.arrayBody);
+        }
+        socketIoManagement.drawOtherClientSnake();
 
 
         snake.clearBody();

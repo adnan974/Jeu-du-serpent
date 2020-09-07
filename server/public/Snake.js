@@ -59,6 +59,10 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
         this.arrayBody.shift();
     }
 
+    this.resetArrayBody = function(){
+        this.arrayBody = [];
+    }
+
     this.mooveDirection = function () {
 
         switch (this.direction) {
