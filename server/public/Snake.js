@@ -59,6 +59,14 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
         this.arrayBody.shift();
     }
 
+    this.clearAllBody = function(){
+            this.arrayBody.forEach(element => {
+                this.canvasContext.clearRect(element[0], element[1], this.width, this.height);
+                //this.canvasContext.drawImage(snake, element[0], element[1], this.width, this.height);
+            });
+        
+    }
+
     this.resetArrayBody = function(){
         this.arrayBody = [];
     }
@@ -141,7 +149,6 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
 
     this.grow = function () {
         this.arrayBody.push([null, null]);
-        console.log(this.arrayBody.length);
 
     }
 

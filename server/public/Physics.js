@@ -12,7 +12,6 @@ function Physics(snake,boardGame,fruit) {
     this.fruit = fruit;
 
     this.checkBoardColision = function(){
-        console.log("newX :"+snake.newX,"newY :"+snake.newY);
         if((snake.newX== -5 || snake.newY == -5)||snake.newX == boardGame.width||snake.newY == boardGame.height){
             return true;
         }

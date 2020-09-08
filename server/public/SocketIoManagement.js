@@ -29,15 +29,19 @@ function SocketIoManagement() {
             console.log("body recu:"+otherClientSnakeBody);
             this.multiplayerSnake.arrayBody = otherClientSnakeBody;
             this.multiplayerSnake.draw();
+
+            //socket.emit("EmitclearBodyForDeplacement")
         }).bind(this))
     })
 
     this.emitSnakeBody = function (snakeBody) {
-        socket.emit("snakeBody", snakeBody);
+        socket.emit("EmitsnakeBody", snakeBody);
     }
 
     this.clearOtherClientSnakeBody = function(snakeBody){
-        this.multiplayerSnake.resetArrayBody();
+        this.multiplayerSnake.arrayBody = 
+        
+        this.multiplayerSnake.clearAllBody();
         
     }
 }

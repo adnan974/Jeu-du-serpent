@@ -16,7 +16,6 @@ var canvaId = "canvas";
     boardGame.createHomePage();
 
     document.addEventListener("keypress", function (e) {
-        console.log(e.keyCode);
         if (e.keyCode == 121) {
             gameSetup();
         }
@@ -47,7 +46,7 @@ function gameSetup() {
     // var scoreElement = document.getElementById("score");
 
 
-    var speed = 140;
+    var speed = 700;
     var boardGame = new BoardGame(canvaId);
     var snake = new Snake(canvaId);
     var fruit = new Fruit(canvaId);
@@ -103,11 +102,13 @@ function gameSetup() {
 
 
     function animation() {
-
-        socketIoManagement.emitSnakeBody(snake.arrayBody);
-        if (snake.arrayBody.length > 1){
+       /* if (snake.arrayBody.length > 1){
+            
+            console.log("je suis entré" );
             socketIoManagement.clearOtherClientSnakeBody(snake.arrayBody);
-        }
+        }*/
+        socketIoManagement.emitSnakeBody(snake.arrayBody);
+        
         socketIoManagement.drawOtherClientSnake();
 
 

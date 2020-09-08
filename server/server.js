@@ -4,6 +4,9 @@ var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io").listen(server);
 
+
+var test = [];
+
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
@@ -15,8 +18,10 @@ io.sockets.on('connection', function (socket) {
         console.log(message);
     })
 
-    // CECI EST UN TEST
-    socket.on("snakeBody", function (snakeBody) {
+    socket.on("EmitsnakeBody", function (snakeBody) {
+        /*test.push(snakeBody[snakeBody.length -1]);
+        console.log("test   :   "+test);*/
+
         socket.broadcast.emit("snakeBodyToAll", snakeBody);
     })
 })
