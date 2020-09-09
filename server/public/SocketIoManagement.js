@@ -20,8 +20,7 @@ function SocketIoManagement() {
     // Solution : on utilise uneFontion.bind(unObjet) pou associer les this de la fonction à un objet en particulier
     // Autre solution : Utiliser les fonctions fléchées. Le mc "this" dans une FF conrrespond au this qui englobe la fonction. 
 
-    this.drawOtherClientSnake = (function () {
-
+    this.drawOtherClientSnake = function () {
         socket.on("snakeBodyToAll", (function (otherClientSnakeBody) {
             /*if(this.multiplayerSnake.arrayBody.length > 0){
                 this.multiplayerSnake.clearBody();
@@ -32,18 +31,18 @@ function SocketIoManagement() {
 
             //socket.emit("EmitclearBodyForDeplacement")
         }).bind(this))
-    })
+    }
 
     this.emitSnakeBody = function (snakeBody) {
         socket.emit("EmitsnakeBody", snakeBody);
     }
 
     this.clearOtherClientSnakeBody = function(snakeBody){
-        this.multiplayerSnake.arrayBody = 
+        this.multiplayerSnake.arrayBody = snakeBody;
+        console.log("snake body envoyé : "+"x = "+this.multiplayerSnake.arrayBody[0]+" y ="+this.multiplayerSnake.arrayBody[1]);
+        this.multiplayerSnake.clearBody();
         
-        this.multiplayerSnake.clearAllBody();
-        
-    }
+    }.bind(this)
 }
 
 

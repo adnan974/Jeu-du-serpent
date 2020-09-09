@@ -100,17 +100,21 @@ function gameSetup() {
 
     })
 
-
+    var test = [];
     function animation() {
-       /* if (snake.arrayBody.length > 1){
-            
-            console.log("je suis entré" );
-            socketIoManagement.clearOtherClientSnakeBody(snake.arrayBody);
-        }*/
+
+        console.log("Snake body: "+snake.arrayBody);
+        console.log("element à effacer (premier element du snake body)"+test);
+
+        if(test.length != 0){
+            socketIoManagement.clearOtherClientSnakeBody(test);
+        }
+        
         socketIoManagement.emitSnakeBody(snake.arrayBody);
         
         socketIoManagement.drawOtherClientSnake();
 
+        test = snake.arrayBody[0];
 
         snake.clearBody();
         snake.mooveDirection();
@@ -136,7 +140,7 @@ function gameSetup() {
             snake.grow();
 
             // TEST
-            socket.emit("snakeBody", snake.arrayBody);
+            //socket.emit("snakeBody", snake.arrayBody);
 
 
 

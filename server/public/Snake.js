@@ -148,7 +148,7 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
     }
 
     this.grow = function () {
-        this.arrayBody.push([null, null]);
+        this.arrayBody.push([0,0]);
 
     }
 
