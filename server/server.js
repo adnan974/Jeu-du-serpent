@@ -21,8 +21,13 @@ io.sockets.on('connection', function (socket) {
     socket.on("EmitsnakeBody", function (snakeBody) {
         /*test.push(snakeBody[snakeBody.length -1]);
         console.log("test   :   "+test);*/
-
+        test = snakeBody[0];
         socket.broadcast.emit("snakeBodyToAll", snakeBody);
+    })
+
+    socket.on("clearRequestOtherSnakeBodyForDeplacement",function(){
+        console.log("first Element other snake:  "+ test);
+        socket.broadcast.emit("clearResponseOtherSnakeBodyForDeplacement",test);
     })
 })
 

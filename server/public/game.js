@@ -103,12 +103,18 @@ function gameSetup() {
     var test = [];
     function animation() {
 
-        console.log("Snake body: "+snake.arrayBody);
-        console.log("element à effacer (premier element du snake body)"+test);
-
         if(test.length != 0){
-            socketIoManagement.clearOtherClientSnakeBody(test);
+            socketIoManagement.RequestToclearOtherClientSnakeBody();
         }
+
+        
+
+
+        /*
+        this.multiplayerSnake.arrayBody = snakeBody;
+        console.log("snake body envoyé : "+"x = "+this.multiplayerSnake.arrayBody[0]+" y ="+this.multiplayerSnake.arrayBody[1]);
+        this.multiplayerSnake.clearBody();
+        */
         
         socketIoManagement.emitSnakeBody(snake.arrayBody);
         

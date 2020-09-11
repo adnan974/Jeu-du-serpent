@@ -37,12 +37,17 @@ function SocketIoManagement() {
         socket.emit("EmitsnakeBody", snakeBody);
     }
 
-    this.clearOtherClientSnakeBody = function(snakeBody){
-        this.multiplayerSnake.arrayBody = snakeBody;
-        console.log("snake body envoyé : "+"x = "+this.multiplayerSnake.arrayBody[0]+" y ="+this.multiplayerSnake.arrayBody[1]);
-        this.multiplayerSnake.clearBody();
-        
-    }.bind(this)
+    this.RequestToclearOtherClientSnakeBody = function(){
+
+        socket.emit("clearRequestOtherSnakeBodyForDeplacement");
+   
+    }
+
+    this.clearOtherSnakeBody = function(){
+        socket.on("clearResponseOtherSnakeBodyForDeplacement",function(snakeBody){
+            
+        })
+    }
 }
 
 
