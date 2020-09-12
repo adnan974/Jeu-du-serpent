@@ -103,9 +103,10 @@ function gameSetup() {
     var test = [];
     function animation() {
 
-        if(test.length != 0){
-            socketIoManagement.RequestToclearOtherClientSnakeBody();
-        }
+        socketIoManagement.RequestToclearOtherClientSnakeBody();
+
+        socketIoManagement.clearOtherSnakeBody();
+        
 
         
 

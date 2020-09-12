@@ -22,10 +22,7 @@ function SocketIoManagement() {
 
     this.drawOtherClientSnake = function () {
         socket.on("snakeBodyToAll", (function (otherClientSnakeBody) {
-            /*if(this.multiplayerSnake.arrayBody.length > 0){
-                this.multiplayerSnake.clearBody();
-            }*/
-            console.log("body recu:"+otherClientSnakeBody);
+            
             this.multiplayerSnake.arrayBody = otherClientSnakeBody;
             this.multiplayerSnake.draw();
 
@@ -45,8 +42,10 @@ function SocketIoManagement() {
 
     this.clearOtherSnakeBody = function(){
         socket.on("clearResponseOtherSnakeBodyForDeplacement",function(snakeBody){
-            
-        })
+            this.multiplayerSnake.arrayBody = snakeBody;
+            console.log("client snake body 0: "+snakeBody[0]);
+            this.multiplayerSnake.clearAllBody();
+        }.bind(this))
     }
 }
 
