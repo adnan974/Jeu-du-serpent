@@ -5,7 +5,6 @@ var server = require("http").createServer(app);
 var io = require("socket.io").listen(server);
 
 
-var test = [];
 
 app.use(express.static("public"));
 
@@ -19,19 +18,10 @@ io.sockets.on('connection', function (socket) {
     })
 
     socket.on("EmitsnakeBody", function (snakeBody) {
-        /*test.push(snakeBody[snakeBody.length -1]);
-        console.log("test   :   "+test);*/
-        test = snakeBody[0];
-        
-        
+ 
         socket.broadcast.emit("snakeBodyToAll", snakeBody);
     })
 
-    socket.on("clearRequestOtherSnakeBodyForDeplacement",function(){
-        console.log("first Element other snake:  "+ test);
-        console.log("test 0: "+test[0]);
-        socket.broadcast.emit("clearResponseOtherSnakeBodyForDeplacement",test);
-    })
 })
 
 server.listen(8080);

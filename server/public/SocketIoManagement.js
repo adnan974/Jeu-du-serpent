@@ -3,6 +3,7 @@ import { Snake } from "./Snake.js";
 function SocketIoManagement() {
 
     this.multiplayerSnake = new Snake("canvas");
+    this.testLastSnakeBody = [];
 
     // PB: Ici "this" est dans une callback function, ce qui veut dire qu'elle n'est pas assignée à la propriété "multiplayerSnake" car c'est comme 
     // ça que fonctionne "this" (Voir documentation internet)
@@ -22,11 +23,10 @@ function SocketIoManagement() {
 
     this.drawOtherClientSnake = function () {
         socket.on("snakeBodyToAll", (function (otherClientSnakeBody) {
-            
+            console.log("Reception du snake body de l'autre client : "+otherClientSnakeBody);
             this.multiplayerSnake.arrayBody = otherClientSnakeBody;
             this.multiplayerSnake.draw();
 
-            //socket.emit("EmitclearBodyForDeplacement")
         }).bind(this))
     }
 
@@ -34,17 +34,13 @@ function SocketIoManagement() {
         socket.emit("EmitsnakeBody", snakeBody);
     }
 
-    this.RequestToclearOtherClientSnakeBody = function(){
-
-        socket.emit("clearRequestOtherSnakeBodyForDeplacement");
-   
-    }
-
     this.clearOtherSnakeBody = function(){
         socket.on("clearResponseOtherSnakeBodyForDeplacement",function(snakeBody){
-            this.multiplayerSnake.arrayBody = snakeBody;
-            console.log("client snake body 0: "+snakeBody[0]);
+            this.multiplayerSnake.test = snakeBody;
             this.multiplayerSnake.clearAllBody();
+
+            
+
         }.bind(this))
     }
 }

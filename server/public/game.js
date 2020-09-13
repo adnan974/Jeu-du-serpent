@@ -100,15 +100,8 @@ function gameSetup() {
 
     })
 
-    var test = [];
     function animation() {
 
-        socketIoManagement.RequestToclearOtherClientSnakeBody();
-
-        socketIoManagement.clearOtherSnakeBody();
-        
-
-        
 
 
         /*
@@ -121,7 +114,6 @@ function gameSetup() {
         
         socketIoManagement.drawOtherClientSnake();
 
-        test = snake.arrayBody[0];
 
         snake.clearBody();
         snake.mooveDirection();
