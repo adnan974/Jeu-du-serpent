@@ -46,7 +46,7 @@ function gameSetup() {
     // var scoreElement = document.getElementById("score");
 
 
-    var speed = 700;
+    var speed = 350;
     var boardGame = new BoardGame(canvaId);
     var snake = new Snake(canvaId);
     var fruit = new Fruit(canvaId);
@@ -102,13 +102,7 @@ function gameSetup() {
 
     function animation() {
 
-
-
-        /*
-        this.multiplayerSnake.arrayBody = snakeBody;
-        console.log("snake body envoyé : "+"x = "+this.multiplayerSnake.arrayBody[0]+" y ="+this.multiplayerSnake.arrayBody[1]);
-        this.multiplayerSnake.clearBody();
-        */
+        socketIoManagement.clearOtherSnakeBody();
         
         socketIoManagement.emitSnakeBody(snake.arrayBody);
         

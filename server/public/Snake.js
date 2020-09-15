@@ -17,6 +17,8 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
     this.growthNumber = 0;
 
     this.arrayBody = [[this.newX, this.newY]];
+    this.testLastSnakeBody = [];
+
 
 
 
@@ -137,6 +139,12 @@ function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
     this.grow = function () {
         this.arrayBody.push([0,0]);
 
+    }
+
+    this.testClearOtherSnakeFirstBody = function(){
+        this.testLastSnakeBody.forEach(element => {
+            this.canvasContext.clearRect(element[0], element[1], this.width, this.height);
+        });
     }
 
 

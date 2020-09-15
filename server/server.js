@@ -8,7 +8,7 @@ var io = require("socket.io").listen(server);
 
 app.use(express.static("public"));
 
-app.get("/", function (req, res) {
+app.get("/jeu", function (req, res) {
     res.render("index.ejs");
 })
 
