@@ -46,7 +46,7 @@ function gameSetup() {
     // var scoreElement = document.getElementById("score");
 
 
-    var speed = 350;
+    var speed = 150;
     var boardGame = new BoardGame(canvaId);
     var snake = new Snake(canvaId);
     var fruit = new Fruit(canvaId);

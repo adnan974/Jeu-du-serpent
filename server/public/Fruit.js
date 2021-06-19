@@ -1,7 +1,7 @@
 
 import {Canvas} from "./Canvas.js";
 import {BoardGame} from "./BoardGame.js";
-import {getRandomInt} from "./Function collection.js"
+import {getRandomInt} from "./FunctionCollection.js"
 
 function Fruit(canvasId,color="blue",width=5,height=5,x=0,y=0) {
 
