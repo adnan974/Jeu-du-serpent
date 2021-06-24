@@ -4,6 +4,9 @@
     "express": "^4.17.1",
     "express-static": "^1.2.6",
     "socket.io": "^4.1.2"
+  },
+  "scripts": {
+    "start":"node ./server/server"
   }
 }
 

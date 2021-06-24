@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 
 
 
-app.get("/jeu", function (req, res) {
+app.get(["/","/jeu"], function (req, res) {
     res.render("index");
 })
 
