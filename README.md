@@ -7,6 +7,8 @@ Each time the snake eats a piece of food, its tail grows longer, making the game
 
 ## Running the app
 
+Write this command on the root directory: 
+
 ```bash
 $ npm start
 ```
