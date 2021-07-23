@@ -3,7 +3,7 @@ var express = require("express");
 const serve   = require('express-static');
 var app = express();
 var server = require("http").createServer(app);
-var io = require("socket.io")(8081)
+//var io = require("socket.io")(8081)
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -30,6 +30,6 @@ app.get(["/","/jeu"], function (req, res) {
 app.use(serve(__dirname + '/public'));
 
 
-server.listen(8080,()=>{
+server.listen(8082,()=>{
     console.log("server is listening");
 });
