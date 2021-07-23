@@ -30,6 +30,6 @@ app.get(["/","/jeu"], function (req, res) {
 app.use(serve(__dirname + '/public'));
 
 
-server.listen(8080,()=>{
+server.listen(process.env.PORT || 8080,()=>{
     console.log("server is listening");
 });
