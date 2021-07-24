@@ -3,7 +3,6 @@ import { BoardGame } from "./BoardGame.js";
 import { Snake } from "./Snake.js"
 import { Fruit } from "./Fruit.js";
 import { Physics } from "./Physics.js";
-import { SocketIoManagement } from "./SocketIoManagement.js";
 
 
 var canvaId = "canvas";
@@ -55,15 +54,11 @@ function gameSetup() {
     // A analyse: des lecons interessante à en tirer dans la maniere dont j'ai crée cette clase.
     var physicsGame = new Physics(snake, boardGame, fruit);
 
-    var socketIoManagement = new SocketIoManagement();
-
-    //scoreElement.textContent = "Score: " + boardGame.score;
 
     boardGame.clear();
-    //boardGame.beginPath();
 
 
-    boardGame.createBoder();
+    boardGame.createBorder();
     boardGame.updateScoreInterface();
 
     snake.setColor("red");
@@ -102,15 +97,11 @@ function gameSetup() {
 
     function animation() {
 
-        socketIoManagement.clearOtherSnakeBody();
-        
-        socketIoManagement.emitSnakeBody(snake.arrayBody);
-        
-        socketIoManagement.drawOtherClientSnake();
-
 
         snake.clearBody();
         snake.mooveDirection();
+        boardGame.createBorder();
+
 
         // Je préfére mettre : "this.setColor("red");" en dehors de la fonction "draw()" car je ne veux pas que celle ait un side effect
         snake.setColor("red");

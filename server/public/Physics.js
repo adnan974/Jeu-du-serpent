@@ -12,7 +12,7 @@ function Physics(snake,boardGame,fruit) {
     this.fruit = fruit;
 
     this.checkBoardColision = function(){
-        if((snake.newX== -5 || snake.newY == -5)||snake.newX == boardGame.width||snake.newY == boardGame.height){
+        if((snake.newX== 5 || snake.newY == 5)||snake.newX == boardGame.width+10||snake.newY == boardGame.height+10){
             return true;
         }
     this.checkSnakeColision = function(){

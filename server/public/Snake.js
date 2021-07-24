@@ -1,5 +1,5 @@
 import { Canvas } from "./Canvas.js";
-function Snake(canvasId, initX = 5, initY = 5, width = 5, height = 5) {
+function Snake(canvasId, initX = 15, initY = 15, width = 5, height = 5) {
     Canvas.call(this, canvasId);
 
 

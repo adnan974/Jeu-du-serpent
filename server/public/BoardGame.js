@@ -1,9 +1,9 @@
 import { Canvas } from "./Canvas.js"
 
 // TODO séparer cette classe en plusieurs classes. Une qui gère, le board, l'autre le score etc... avec une interface
-function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1") {
+function BoardGame(canvasId, color = "black", height = 150, width = 150, borderWitdh = "0") {
 
-    Canvas.call(this,canvasId);
+    Canvas.call(this, canvasId);
 
 
     // ancienne version
@@ -20,7 +20,7 @@ function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1
     this.borderWitdh = borderWitdh;
     this.score = -10;
 
-    this.createBoder = function () {
+    this.createBorder = function () {
         this.canvasContext.setTransform(1, 0, 0, 1, 0, 0);
 
         // Cette fonction double la taille de tous les éléments du context
@@ -31,7 +31,9 @@ function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1
 
         this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.strokeRect(0, 0, this.height, this.width);
+        this.canvasContext.rect(10, 10, this.height, this.width);
+        this.canvasContext.stroke();
+        //this.canvasContext.strokeRect(0, 0, this.height, this.width);
     }
 
     // TODO a supprimer qd plus utilisé. Je dois utilisé la méthode présente dans la classe Canvas
@@ -54,17 +56,17 @@ function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1
 
         this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;
-        this.canvasContext.strokeRect(0, 0, this.height, this.width);
+        this.canvasContext.strokeRect(10, 10, this.height, this.width);
 
         this.canvasContext.fillStyle = "black";
 
         this.canvasContext.font = "8px Arial";
         this.canvasContext.fillText("Appuyez sur 'Y' pour commencer", this.width / 7, this.height / 2);
-        
+
 
     }
 
-    this.createGameOverPage = function(){
+    this.createGameOverPage = function () {
         this.clear();
         this.canvasContext.lineWidth = this.borderWitdh;
         this.canvasContext.fillStyle = this.color;
@@ -73,7 +75,7 @@ function BoardGame(canvasId, color = "black",height=150,width=150,borderWitdh="1
         this.canvasContext.fillStyle = "black";
 
         this.canvasContext.font = "8px Arial";
-        this.canvasContext.fillText("GAME OVER", this.width/5, this.height / 2);
+        this.canvasContext.fillText("GAME OVER", this.width / 5, this.height / 2);
     }
 
 

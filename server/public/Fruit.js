@@ -24,7 +24,7 @@ function Fruit(canvasId,color="blue",width=5,height=5,x=0,y=0) {
     this.getColor = () => this.color;
 
     this.getRandomIntOf5Table = function(){
-        let randomInt = getRandomInt(5, this.boardGame.width - 5);
+        let randomInt = getRandomInt(15, this.boardGame.width - 5);
         
         return randomInt-randomInt%5;
     }
